@@ -10,6 +10,7 @@
 
     <script>
         $(document).ready(function() {
+            var $body = $('body')
 
             // Typography Headers
             var element = ejs.bs3.typography.Header.create()
@@ -29,6 +30,24 @@
             $('body').append(element.htmlNode())
 
             $('body').append(ejs.bs3.base.HLineBreak.create().htmlNode())
+
+            // Paragraph
+            $body.append(ejs.bs3.typography.Paragraph.create().setText("Hello from paragraph #1").htmlNode())
+            $body.append(ejs.bs3.typography.Paragraph.create("Hello from paragraph #2").htmlNode())
+            $body.append(ejs.bs3.typography.Paragraph.create("Hello from paragraph #3").setLead(true).htmlNode())
+
+            // SmallText
+            $body.append(ejs.bs3.typography.SmallText.create().setText("Small text #1").htmlNode())
+            $body.append(ejs.bs3.base.LineBreak.create().htmlNode())
+
+            // StrongText
+            $body.append(ejs.bs3.typography.StrongText.create().setText("Strong text #1").htmlNode())
+            $body.append(ejs.bs3.base.LineBreak.create().htmlNode())
+
+            // ItalicText
+            $body.append(ejs.bs3.typography.ItalicText.create().setText("Italic text #1").htmlNode())
+            $body.append(ejs.bs3.base.LineBreak.create().htmlNode())
+
 
             // Typography Code
 //            var code = ejs.bs.typography.Code.create()

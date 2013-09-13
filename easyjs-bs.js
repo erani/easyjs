@@ -21,10 +21,10 @@ ejs.bs.core.Object = $.extend({}, ejs.Object, {
     _domNode: null,
 
     _attrs: {
-        id: null,
-        name: null,
-        styleClass: null,
-        style: null
+        id: "",
+        name: "",
+        styleClass: "",
+        style: ""
     },
 
     html: function() {
@@ -33,6 +33,7 @@ ejs.bs.core.Object = $.extend({}, ejs.Object, {
 
     htmlNode: function() {
         if (null == this._domNode) {
+            this._computeAttributes()
             this._domNode = this._factoryNode()
         }
 
@@ -41,7 +42,10 @@ ejs.bs.core.Object = $.extend({}, ejs.Object, {
 
     _factoryNode: function() {
         throw "The method should be overridden"
-    }
+    },
+
+    _computeAttributes: function() {}
+
 })
 
 ejs.bs.core.SimpleTag = $.extend({}, ejs.bs.core.Object, ejs.bs.core.DynamicNamedTag, {
@@ -57,6 +61,7 @@ ejs.bs.core.BodyTag = $.extend({}, ejs.bs.core.Object, ejs.bs.core.DynamicNamedT
 
     addChildren: function(children) {
         this._children.push(children)
+        return this
     },
 
     _factoryNode: function() {
@@ -70,13 +75,22 @@ ejs.bs.core.BodyTag = $.extend({}, ejs.bs.core.Object, ejs.bs.core.DynamicNamedT
 ejs.bs.core.TextTag = $.extend({}, ejs.bs.core.Object, ejs.bs.core.DynamicNamedTag, {
     _text: null,
 
+    create: function(text) {
+        var obj = ejs.Object.create.call(this)
+        obj._text = text
+
+        return obj
+    },
+
     setText: function(text) {
         this._text = text
+        return this
     },
 
     _factoryNode: function() {
         return ejs.html.DomFactory.createNode({
             tagName: this._getTagName(),
+            attrs: this._attrs,
             html: this._text
         })
     }
@@ -110,21 +124,61 @@ ejs.bs3.typography.Header = $.extend({}, ejs.bs.core.TextTag, {
     _level: null,
 
     create: function(level, text) {
-        var obj = ejs.Object.create.call(this)
+        var obj = ejs.bs.core.TextTag.create.call(this)
         obj._level = ejs.util.defined(level, this.LEVEL_H1)
-        obj._text = ejs.util.defined(text, null)
 
         return obj
     },
 
     setLevel: function(level) {
         this._level = level
+        return this
     },
 
     _getTagName: function() {
         return "h" + this._level
     }
 })
+
+ejs.bs3.typography.Paragraph = $.extend({}, ejs.bs.core.TextTag, {
+    _lead: false,
+
+    setLead: function(b) {
+        this._lead = b;
+        return this
+    },
+
+    _getTagName: function() {
+        return "p"
+    },
+
+    _computeAttributes: function() {
+        ejs.bs.core.TextTag._computeAttributes.call(this)
+
+        if (this._lead) {
+            this._attrs.styleClass += " lead".trim()
+        }
+    }
+})
+
+ejs.bs3.typography.SmallText = $.extend({}, ejs.bs.core.TextTag, {
+    _getTagName: function() {
+        return "small"
+    }
+})
+
+ejs.bs3.typography.StrongText = $.extend({}, ejs.bs.core.TextTag, {
+    _getTagName: function() {
+        return "strong"
+    }
+})
+
+ejs.bs3.typography.ItalicText = $.extend({}, ejs.bs.core.TextTag, {
+    _getTagName: function() {
+        return "em"
+    }
+})
+
 
 //ejs.bs3.typography.Code = $.extend({}, ejs.bs3.core.SimpleContentTag, {
 //    _getTagName: function() {

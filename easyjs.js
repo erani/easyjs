@@ -36,7 +36,7 @@ ejs.html = {
 
             conf.attrs = ejs.util.defined(conf.attrs, {})
             conf.attrs['class'] = ejs.util.defined(conf.attrs.styleClass, null)
-            conf.attrs.styleClass = null
+            conf.attrs.styleClass = ""
 
             for (var attr in conf.attrs) {
                 if (!ejs.util.empty(conf.attrs[attr])) {
