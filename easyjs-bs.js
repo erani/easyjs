@@ -1,3 +1,5 @@
+/** ===== Bootstrap Common Package ===== **/
+
 ejs.bs = {
     core: {
         HEADER_LEVEL_1: 1,
@@ -5,23 +7,17 @@ ejs.bs = {
         HEADER_LEVEL_3: 3,
         HEADER_LEVEL_4: 4,
         HEADER_LEVEL_5: 5,
-        HEADER_LEVEL_6: 6
-    }
-}
+        HEADER_LEVEL_6: 6,
 
-ejs.bs3 = {}
-
-/** ===== Core Package ===== **/
-
-ejs.bs3.core = {
-    DynamicNamedTag: {
-        _getTagName: function() {
-            throw "The method should be overridden"
+        DynamicNamedTag: {
+            _getTagName: function() {
+                throw "The method should be overridden"
+            }
         }
     }
 }
 
-ejs.bs3.core.Object = $.extend({}, ejs.Object, {
+ejs.bs.core.Object = $.extend({}, ejs.Object, {
     _domNode: null,
 
     _attrs: {
@@ -48,7 +44,7 @@ ejs.bs3.core.Object = $.extend({}, ejs.Object, {
     }
 })
 
-ejs.bs3.core.SimpleTag = $.extend({}, ejs.bs3.core.Object, ejs.bs3.core.DynamicNamedTag, {
+ejs.bs.core.SimpleTag = $.extend({}, ejs.bs.core.Object, ejs.bs.core.DynamicNamedTag, {
     _factoryNode: function() {
         return ejs.html.DomFactory.createNode({
             tagName: this._getTagName()
@@ -56,7 +52,7 @@ ejs.bs3.core.SimpleTag = $.extend({}, ejs.bs3.core.Object, ejs.bs3.core.DynamicN
     }
 })
 
-ejs.bs3.core.BodyTag = $.extend({}, ejs.bs3.core.Object, ejs.bs3.core.DynamicNamedTag, {
+ejs.bs.core.BodyTag = $.extend({}, ejs.bs.core.Object, ejs.bs.core.DynamicNamedTag, {
     _children: [],
 
     addChildren: function(children) {
@@ -71,7 +67,7 @@ ejs.bs3.core.BodyTag = $.extend({}, ejs.bs3.core.Object, ejs.bs3.core.DynamicNam
     }
 })
 
-ejs.bs3.core.TextTag = $.extend({}, ejs.bs3.core.Object, ejs.bs3.core.DynamicNamedTag, {
+ejs.bs.core.TextTag = $.extend({}, ejs.bs.core.Object, ejs.bs.core.DynamicNamedTag, {
     _text: null,
 
     setText: function(text) {
@@ -86,17 +82,21 @@ ejs.bs3.core.TextTag = $.extend({}, ejs.bs3.core.Object, ejs.bs3.core.DynamicNam
     }
 })
 
+/** ===== Bootstrap 3 Package ===== **/
+
+ejs.bs3 = {}
+
 /** ===== Base Package ===== **/
 
 ejs.bs3.base = {}
 
-ejs.bs3.base.LineBreak = $.extend({}, ejs.bs3.core.SimpleTag, {
+ejs.bs3.base.LineBreak = $.extend({}, ejs.bs.core.SimpleTag, {
     _getTagName: function() {
         return "br"
     }
 })
 
-ejs.bs3.base.HLineBreak = $.extend({}, ejs.bs3.core.SimpleTag, {
+ejs.bs3.base.HLineBreak = $.extend({}, ejs.bs.core.SimpleTag, {
     _getTagName: function() {
         return "hr"
     }
@@ -106,7 +106,7 @@ ejs.bs3.base.HLineBreak = $.extend({}, ejs.bs3.core.SimpleTag, {
 
 ejs.bs3.typography = {}
 
-ejs.bs3.typography.Header = $.extend({}, ejs.bs3.core.TextTag, {
+ejs.bs3.typography.Header = $.extend({}, ejs.bs.core.TextTag, {
     _level: null,
 
     create: function(level, text) {
