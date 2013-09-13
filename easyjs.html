@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Easy JS Test page</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+
+    <script src="jquery-1.10.2.min.js"></script>
+    <script src="easyjs.js"></script>
+    <script src="easyjs-bs.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+            // Typography Headers
+            var element = ejs.bs3.typography.Header.create()
+            element.setText("H1 Element, default")
+            $('body').append(element.htmlNode())
+
+            element = ejs.bs3.typography.Header.create(ejs.bs.core.HEADER_LEVEL_1)
+            element.setText("H3 Element, by constructor")
+            $('body').append(element.htmlNode())
+
+            element = ejs.bs3.typography.Header.create(ejs.bs.core.HEADER_LEVEL_3, "H3 Element, by constructor with text")
+            $('body').append(element.htmlNode())
+
+            var element = ejs.bs3.typography.Header.create()
+            element.setLevel(ejs.bs.core.HEADER_LEVEL_5)
+            element.setText("H5 Element")
+            $('body').append(element.htmlNode())
+
+            $('body').append(ejs.bs3.base.HLineBreak.create().htmlNode())
+
+            // Typography Code
+//            var code = ejs.bs.typography.Code.create()
+//            code.setContent("for (i = 0; i < 100; i++)");
+//            $('body').append(code.htmlNode())
+//
+//            $('body').append(ejs.bs.core.HLineBreak.create().htmlNode())
+//
+//            // Typography Pre
+//            $('body').append(ejs.bs.typography.Pre.create("Some content").htmlNode())
+//
+//            $('body').append(ejs.bs.core.HLineBreak.create().htmlNode())
+//
+//            // Table
+//            var table = ejs.bs.Table.create();
+//            table.addProperty(ejs.bs.Table.STRIPED)
+//            table.addProperty(ejs.bs.Table.BORDERED)
+//            table.addRow([
+//                "Col A", "Col B", "Col C"
+//            ])
+//            table.addRow([
+//                "Col A", "Col B", "Col C"
+//            ], ejs.bs.Table.DANGER)
+//            table.addHeaderRow([
+//                    "Header A", "Header B", "Header C"
+//            ])
+//            $('body').append(table.htmlNode())
+        })
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>
