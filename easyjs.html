@@ -126,32 +126,20 @@
             code.setScrollable(true)
             $body.append(code.htmlNode())
 
-            // Typography Code
-//            var code = ejs.bs.typography.Code.create()
-//            code.setContent("for (i = 0; i < 100; i++)");
-//            $('body').append(code.htmlNode())
-//
-//            $('body').append(ejs.bs.core.HLineBreak.create().htmlNode())
-//
-//            // Typography Pre
-//            $('body').append(ejs.bs.typography.Pre.create("Some content").htmlNode())
-//
-//            $('body').append(ejs.bs.core.HLineBreak.create().htmlNode())
-//
-//            // Table
-//            var table = ejs.bs.Table.create();
-//            table.addProperty(ejs.bs.Table.STRIPED)
-//            table.addProperty(ejs.bs.Table.BORDERED)
-//            table.addRow([
-//                "Col A", "Col B", "Col C"
-//            ])
-//            table.addRow([
-//                "Col A", "Col B", "Col C"
-//            ], ejs.bs.Table.DANGER)
-//            table.addHeaderRow([
-//                    "Header A", "Header B", "Header C"
-//            ])
-//            $('body').append(table.htmlNode())
+           // Table
+           var table = ejs.bs3.Table.create();
+           table.addProperty(ejs.bs3.Table.STRIPED)
+           table.addProperty(ejs.bs3.Table.BORDERED)
+           table.addRow([
+               "Col A", "Col B", "Col C"
+           ])
+           table.addRow([
+               "Col A", "Col B", "Col C"
+           ], ejs.bs3.Table.DANGER)
+           table.addHeaderRow([
+                   "Header A", "Header B", "Header C"
+           ])
+           $('body').append(table.htmlNode())
         })
 
     </script>

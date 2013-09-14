@@ -433,109 +433,97 @@ ejs.bs3.typography.CodeBlock = $.extend(true, {}, ejs.bs.core.BodyTag, {
     }
 })
 
-//ejs.bs3.typography.Code = $.extend({}, ejs.bs3.core.SimpleContentTag, {
-//    _getTagName: function() {
-//        return "code"
-//    }
-//})
-//
-//ejs.bs3.typography.Pre = $.extend({}, ejs.bs3.core.SimpleContentTag, {
-//    _getTagName: function() {
-//        return "pre"
-//    }
-//})
-//
-//ejs.bs3.Table = $.extend({}, ejs.bs3.UIObject, {
-//    STRIPED: 'table-striped',
-//    BORDERED: 'table-bordered',
-//    HOVER: 'table-hover',
-//    CONDENSED: 'table-condensed',
-//
-//    SUCCESS: 'success',
-//    DANGER: 'danger',
-//    WARNING: 'warning',
-//    ACTIVE: 'active',
-//
-//    _data: {
-//        headers: [],
-//        footers: [],
-//        rows: []
-//    },
-//
-//    _prop: [],
-//
-//    _constructor: function()  {
-//        this._attrs.styleClass = "table"
-//    },
-//
-//    addRow: function(columns, property) {
-//        this._data.rows.push({
-//            property: property,
-//            tagName: 'td',
-//            columns: columns
-//        })
-//    },
-//
-//    addHeaderRow: function(columns) {
-//        this._data.headers.push({
-//            tagName: 'th',
-//            columns: columns
-//        })
-//    },
-//
-//    addFooterRow: function(columns) {
-//        this._data.footers.push({
-//            tagName: 'tf',
-//            columns: columns
-//        })
-//    },
-//
-//    addProperty: function(style) {
-//        this._prop.push(style)
-//    },
-//
-//    _factoryNode: function() {
-//        var conf = {
-//            tagName: 'table',
-//            attrs: this._attrs,
-//            children: []
-//        }
-//
-//        for (var i = 0; i < this._prop.length; i++) {
-//            conf.attrs.styleClass += " " + this._prop[i]
-//        }
-//
-//        for (var i = 0; i < this._data.headers.length; i++) {
-//            conf.children.push(this.__getRowFactoryConfiguration(this._data.headers[i]))
-//        }
-//
-//        for (var i = 0; i < this._data.rows.length; i++) {
-//            conf.children.push(this.__getRowFactoryConfiguration(this._data.rows[i]))
-//        }
-//
-//        for (var i = 0; i < this._data.footers.length; i++) {
-//            conf.children.push(this.__getRowFactoryConfiguration(this._data.footers[i]))
-//        }
-//
-//        return ejs.html.DomFactory.createNode(conf)
-//    },
-//
-//    __getRowFactoryConfiguration: function(data) {
-//        var conf = {
-//            tagName: 'tr',
-//            attrs: {
-//                styleClass: ejs.util.defined(data.property, '')
-//            },
-//            children: []
-//        }
-//
-//        for (i = 0; i < data.columns.length; i++) {
-//            conf.children.push({
-//                tagName: data.tagName,
-//                children: [data.columns[i]]
-//            })
-//        }
-//
-//        return conf
-//    }
-//})
+ejs.bs3.Table = $.extend({}, ejs.bs.core.Object, {
+   STRIPED: 'table-striped',
+   BORDERED: 'table-bordered',
+   HOVER: 'table-hover',
+   CONDENSED: 'table-condensed',
+
+   SUCCESS: 'success',
+   DANGER: 'danger',
+   WARNING: 'warning',
+   ACTIVE: 'active',
+
+   _data: {
+       headers: [],
+       footers: [],
+       rows: []
+   },
+
+   _prop: [],
+
+   _constructor: function()  {
+       this._attrs.styleClass = "table"
+   },
+
+   addRow: function(columns, property) {
+       this._data.rows.push({
+           property: property,
+           tagName: 'td',
+           columns: columns
+       })
+   },
+
+   addHeaderRow: function(columns) {
+       this._data.headers.push({
+           tagName: 'th',
+           columns: columns
+       })
+   },
+
+   addFooterRow: function(columns) {
+       this._data.footers.push({
+           tagName: 'tf',
+           columns: columns
+       })
+   },
+
+   addProperty: function(style) {
+       this._prop.push(style)
+   },
+
+   _factoryNode: function() {
+       var conf = {
+           tagName: 'table',
+           attrs: this._attrs,
+           children: []
+       }
+
+       for (var i = 0; i < this._prop.length; i++) {
+           conf.attrs.styleClass += " " + this._prop[i]
+       }
+
+       for (var i = 0; i < this._data.headers.length; i++) {
+           conf.children.push(this.__getRowFactoryConfiguration(this._data.headers[i]))
+       }
+
+       for (var i = 0; i < this._data.rows.length; i++) {
+           conf.children.push(this.__getRowFactoryConfiguration(this._data.rows[i]))
+       }
+
+       for (var i = 0; i < this._data.footers.length; i++) {
+           conf.children.push(this.__getRowFactoryConfiguration(this._data.footers[i]))
+       }
+
+       return ejs.html.DomFactory.createNode(conf)
+   },
+
+   __getRowFactoryConfiguration: function(data) {
+       var conf = {
+           tagName: 'tr',
+           attrs: {
+               styleClass: ejs.util.defined(data.property, '')
+           },
+           children: []
+       }
+
+       for (i = 0; i < data.columns.length; i++) {
+           conf.children.push({
+               tagName: data.tagName,
+               children: [data.columns[i]]
+           })
+       }
+
+       return conf
+   }
+})
