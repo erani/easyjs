@@ -36,6 +36,13 @@
             $body.append(ejs.bs3.typography.Paragraph.create("Hello from paragraph #2").htmlNode())
             $body.append(ejs.bs3.typography.Paragraph.create("Hello from paragraph #3").setLead(true).htmlNode())
 
+            $body.append(ejs.bs3.typography.Paragraph.create("Hello from left paragraph").setTextAlignment(ejs.bs.core.ALIGNMENT_LEFT).htmlNode())
+            $body.append(ejs.bs3.typography.Paragraph.create("Hello from center paragraph").setTextAlignment(ejs.bs.core.ALIGNMENT_CENTER).htmlNode())
+            $body.append(ejs.bs3.typography.Paragraph.create("Hello from right paragraph").setTextAlignment(ejs.bs.core.ALIGNMENT_RIGHT).htmlNode())
+
+            $body.append(ejs.bs3.typography.Paragraph.create("Hello success paragraph").setTextStyle(ejs.bs.core.STYLE_SUCCESS).htmlNode())
+            $body.append(ejs.bs3.typography.Paragraph.create("Hello danger paragraph").setTextStyle(ejs.bs.core.STYLE_DANGER).htmlNode())
+
             // SmallText
             $body.append(ejs.bs3.typography.SmallText.create().setText("Small text #1").htmlNode())
             $body.append(ejs.bs3.base.LineBreak.create().htmlNode())
@@ -48,6 +55,76 @@
             $body.append(ejs.bs3.typography.ItalicText.create().setText("Italic text #1").htmlNode())
             $body.append(ejs.bs3.base.LineBreak.create().htmlNode())
 
+            // Abbreviation
+            $body.append(ejs.bs3.typography.Abbreviation.create().setText("HTML").setTitle("Hyper Text Markup Language").htmlNode())
+            $body.append(ejs.bs3.base.LineBreak.create().htmlNode()) 
+            $body.append(ejs.bs3.typography.Abbreviation.create().setText("Initialism").setTitle("Abbreviation with initialism").setInitialism(true).htmlNode())
+            $body.append(ejs.bs3.base.LineBreak.create().htmlNode())            
+
+            // Address
+            var address = ejs.bs3.typography.Address.create()
+            address.addLine(ejs.bs3.typography.StrongText.create("Twitter, Inc.").htmlNode())
+            address.addLine("795 Folsom Ave, Suite 600")
+            address.addLine("San Francisco, CA 94107")
+            address.addLine("Phone: (+123) 456-7890")
+            $body.append(address.htmlNode())
+
+            // Blockquote
+            $body.append(ejs.bs3.typography.Blockquote.create().setText("The Blockquote text").setSource("Some source").htmlNode())
+
+            // List
+            var list = ejs.bs3.typography.UnorderedList.create()
+            list.addChild("Child A")
+            list.addChild("Child B")
+            list.addChild("Child C")
+            $body.append(list.htmlNode())
+
+            list = ejs.bs3.typography.OrderedList.create()
+            list.addChild("Child A")
+            list.addChild("Child B")
+            list.addChild("Child C")
+            $body.append(list.htmlNode())
+
+            list = ejs.bs3.typography.UnstyledList.create()
+            list.addChild("Child A")
+            list.addChild("Child B")
+            list.addChild("Child C")
+            $body.append(list.htmlNode())
+
+            list = ejs.bs3.typography.UnstyledList.create()
+            list.addChild("Child A")
+            list.addChild("Child B")
+            list.addChild("Child C")
+            list.setInline(true)
+            $body.append(list.htmlNode())
+
+            // Description
+            list = ejs.bs3.typography.Description.create()
+            list.addItem("Caption A", "Description A")
+            list.addItem("Caption B", "Description B")
+            $body.append(list.htmlNode())
+
+            list = ejs.bs3.typography.Description.create()
+            list.addItem("Caption A", "Description A")
+            list.addItem("Caption B", "Description B")
+            list.setHorizontal(true)
+            $body.append(list.htmlNode())
+
+            // Code
+            $body.append(ejs.bs3.typography.CodeInline.create().setText("Inline code").htmlNode())
+
+            var code = ejs.bs3.typography.CodeBlock.create()
+            code.addChild("<?php")
+            code.addChild("$code = 'Hello world';")
+            code.addChild("echo $code;")
+            $body.append(code.htmlNode())
+
+            var code = ejs.bs3.typography.CodeBlock.create()
+            code.addChild("<?php")
+            code.addChild("$code = 'Hello world';")
+            code.addChild("echo $code;")
+            code.setScrollable(true)
+            $body.append(code.htmlNode())
 
             // Typography Code
 //            var code = ejs.bs.typography.Code.create()

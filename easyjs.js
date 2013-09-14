@@ -5,7 +5,7 @@ if (!HTMLElement) {
 var ejs = {
     Object: {
         create: function() {
-            var obj = $.extend({}, this)
+            var obj = $.extend(true, {}, this)
             obj._constructor()
 
             return obj

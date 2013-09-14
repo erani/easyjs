@@ -9,6 +9,17 @@ ejs.bs = {
         HEADER_LEVEL_5: 5,
         HEADER_LEVEL_6: 6,
 
+        ALIGNMENT_LEFT: 'left',
+        ALIGNMENT_CENTER: 'center',
+        ALIGNMENT_RIGHT: 'right',
+
+        STYLE_MUTED: 'muted',
+        STYLE_PRIMARY: 'primary',
+        STYLE_SUCCESS: 'success',
+        STYLE_INFO: 'info',
+        STYLE_WARNING: 'warning',
+        STYLE_DANGER: 'danger',
+
         DynamicNamedTag: {
             _getTagName: function() {
                 throw "The method should be overridden"
@@ -17,7 +28,7 @@ ejs.bs = {
     }
 }
 
-ejs.bs.core.Object = $.extend({}, ejs.Object, {
+ejs.bs.core.Object = $.extend(true, {}, ejs.Object, {
     _domNode: null,
 
     _attrs: {
@@ -48,7 +59,7 @@ ejs.bs.core.Object = $.extend({}, ejs.Object, {
 
 })
 
-ejs.bs.core.SimpleTag = $.extend({}, ejs.bs.core.Object, ejs.bs.core.DynamicNamedTag, {
+ejs.bs.core.SimpleTag = $.extend(true, {}, ejs.bs.core.Object, ejs.bs.core.DynamicNamedTag, {
     _factoryNode: function() {
         return ejs.html.DomFactory.createNode({
             tagName: this._getTagName()
@@ -56,24 +67,27 @@ ejs.bs.core.SimpleTag = $.extend({}, ejs.bs.core.Object, ejs.bs.core.DynamicName
     }
 })
 
-ejs.bs.core.BodyTag = $.extend({}, ejs.bs.core.Object, ejs.bs.core.DynamicNamedTag, {
+ejs.bs.core.BodyTag = $.extend(true, {}, ejs.bs.core.Object, ejs.bs.core.DynamicNamedTag, {
     _children: [],
 
-    addChildren: function(children) {
-        this._children.push(children)
+    addChild: function(child) {
+        this._children.push(child)
         return this
     },
 
     _factoryNode: function() {
-        return {
+        return ejs.html.DomFactory.createNode({
             tagName: this._getTagName(),
+            attrs: this._attrs,
             children: this._children
-        }
+        })
     }
 })
 
-ejs.bs.core.TextTag = $.extend({}, ejs.bs.core.Object, ejs.bs.core.DynamicNamedTag, {
+ejs.bs.core.TextTag = $.extend(true, {}, ejs.bs.core.Object, ejs.bs.core.DynamicNamedTag, {
     _text: null,
+    _textAlignment: null,
+    _textStyle: null,
 
     create: function(text) {
         var obj = ejs.Object.create.call(this)
@@ -85,6 +99,28 @@ ejs.bs.core.TextTag = $.extend({}, ejs.bs.core.Object, ejs.bs.core.DynamicNamedT
     setText: function(text) {
         this._text = text
         return this
+    },
+
+    setTextAlignment: function(alignment) {
+        this._textAlignment = alignment
+        return this
+    },
+
+    setTextStyle: function(style) {
+        this._textStyle = style
+        return this
+    },
+
+    _computeAttributes: function() {
+        ejs.bs.core.Object._computeAttributes.call(this)
+
+        if (this._textAlignment != null) {
+            this._attrs.styleClass += " text-" + this._textAlignment.trim()
+        }
+
+        if (this._textStyle != null) {
+            this._attrs.styleClass += " text-" + this._textStyle.trim()
+        }
     },
 
     _factoryNode: function() {
@@ -104,13 +140,13 @@ ejs.bs3 = {}
 
 ejs.bs3.base = {}
 
-ejs.bs3.base.LineBreak = $.extend({}, ejs.bs.core.SimpleTag, {
+ejs.bs3.base.LineBreak = $.extend(true, {}, ejs.bs.core.SimpleTag, {
     _getTagName: function() {
         return "br"
     }
 })
 
-ejs.bs3.base.HLineBreak = $.extend({}, ejs.bs.core.SimpleTag, {
+ejs.bs3.base.HLineBreak = $.extend(true, {}, ejs.bs.core.SimpleTag, {
     _getTagName: function() {
         return "hr"
     }
@@ -120,7 +156,7 @@ ejs.bs3.base.HLineBreak = $.extend({}, ejs.bs.core.SimpleTag, {
 
 ejs.bs3.typography = {}
 
-ejs.bs3.typography.Header = $.extend({}, ejs.bs.core.TextTag, {
+ejs.bs3.typography.Header = $.extend(true, {}, ejs.bs.core.TextTag, {
     _level: null,
 
     create: function(level, text) {
@@ -140,7 +176,7 @@ ejs.bs3.typography.Header = $.extend({}, ejs.bs.core.TextTag, {
     }
 })
 
-ejs.bs3.typography.Paragraph = $.extend({}, ejs.bs.core.TextTag, {
+ejs.bs3.typography.Paragraph = $.extend(true, {}, ejs.bs.core.TextTag, {
     _lead: false,
 
     setLead: function(b) {
@@ -161,24 +197,241 @@ ejs.bs3.typography.Paragraph = $.extend({}, ejs.bs.core.TextTag, {
     }
 })
 
-ejs.bs3.typography.SmallText = $.extend({}, ejs.bs.core.TextTag, {
+ejs.bs3.typography.SmallText = $.extend(true, {}, ejs.bs.core.TextTag, {
     _getTagName: function() {
         return "small"
     }
 })
 
-ejs.bs3.typography.StrongText = $.extend({}, ejs.bs.core.TextTag, {
+ejs.bs3.typography.StrongText = $.extend(true, {}, ejs.bs.core.TextTag, {
     _getTagName: function() {
         return "strong"
     }
 })
 
-ejs.bs3.typography.ItalicText = $.extend({}, ejs.bs.core.TextTag, {
+ejs.bs3.typography.ItalicText = $.extend(true, {}, ejs.bs.core.TextTag, {
     _getTagName: function() {
         return "em"
     }
 })
 
+ejs.bs3.typography.Abbreviation = $.extend(true, {}, ejs.bs.core.TextTag, {
+    _initialism: false,
+    _title: null,
+
+    setInitialism: function(b) {
+        this._initialism = b
+        return this
+    },
+
+    setTitle: function(title) {
+        this._title = title
+        return this
+    },
+
+    _getTagName: function() {
+        return "abbr"
+    },
+
+    _computeAttributes: function() {
+        ejs.bs.core.TextTag._computeAttributes.call(this)
+
+        if (this._initialism) {
+            this._attrs.styleClass += " initialism".trim()
+        }
+
+        if (!ejs.util.empty(this._title)) {
+            this._attrs.title = this._title
+        }
+    }
+})
+
+ejs.bs3.typography.Address = $.extend(true, {}, ejs.bs.core.Object, {
+    _childrens: [],
+
+    addLine: function(line) {
+        this._childrens.push(line)
+        this._childrens.push({
+            tagName: 'br'
+        })
+    },
+
+    _factoryNode: function() {
+        var childrens = []
+        if (!ejs.util.empty(this._text)) {
+            childrens.push({
+                tagName: 'p',
+                html: this._text
+            })
+        }
+
+        if (!ejs.util.empty(this._source)) {
+            childrens.push({
+                tagName: 'small',
+                html: this._source
+            })
+        }
+
+        return ejs.html.DomFactory.createNode({
+            tagName: 'address',
+            attrs: this._attrs,
+            children: this._childrens
+        })
+    }
+})
+
+ejs.bs3.typography.Blockquote = $.extend(true, {}, ejs.bs.core.Object, {
+    _text: null,
+    _source: null,
+
+    setText: function(text) {
+        this._text = text
+        return this
+    },
+
+    setSource: function(source) {
+        this._source = source
+        return this
+    },
+
+    _factoryNode: function() {
+        var childrens = []
+        if (!ejs.util.empty(this._text)) {
+            childrens.push({
+                tagName: 'p',
+                html: this._text
+            })
+        }
+
+        if (!ejs.util.empty(this._source)) {
+            childrens.push({
+                tagName: 'small',
+                html: this._source
+            })
+        }
+
+        return ejs.html.DomFactory.createNode({
+            tagName: 'blockquote',
+            attrs: this._attrs,
+            children: childrens
+        })
+    }
+})
+
+ejs.bs3.typography.AbstractList = $.extend(true, {}, ejs.bs.core.BodyTag, {
+    _inline: false,
+
+    setInline: function(b) {
+        this._inline = b
+    },
+
+    addChild: function(child) {
+        ejs.bs.core.BodyTag.addChild.call(this, {
+            tagName: 'li',
+            children: [child]
+        })
+
+        return this
+    },
+
+    _computeAttributes: function() {
+        if (!ejs.util.empty(this._inline)) {
+            this._attrs.styleClass += " list-inline"
+            this._attrs.styleClass.trim()
+        }
+    },
+})
+
+ejs.bs3.typography.UnorderedList = $.extend(true, {}, ejs.bs3.typography.AbstractList, {
+    _getTagName: function() {
+        return "ul"
+    }
+})
+
+ejs.bs3.typography.OrderedList = $.extend(true, {}, ejs.bs3.typography.AbstractList, {
+    _getTagName: function() {
+        return "ol"
+    }
+})
+
+ejs.bs3.typography.UnstyledList = $.extend(true, {}, ejs.bs3.typography.AbstractList, {
+    _computeAttributes: function() {
+        ejs.bs3.typography.AbstractList._computeAttributes.call(this)
+        this._attrs.styleClass += " list-unstyled"
+        this._attrs.styleClass.trim()
+    },
+
+    _getTagName: function() {
+        return "ul"
+    }
+})
+
+ejs.bs3.typography.Description = $.extend(true, {}, ejs.bs.core.Object, {
+    _children: [],
+    _horizontal: false,
+
+    addItem: function(caption, text) {
+        this._children.push({
+            tagName: 'dt',
+            html: caption
+        })
+        this._children.push({
+            tagName: 'dd',
+            html: text
+        })
+    },
+
+    setHorizontal: function(b) {
+        this._horizontal = b
+    },
+
+    _computeAttributes: function() {
+        if (!ejs.util.empty(this._horizontal)) {
+            this._attrs.styleClass += " dl-horizontal"
+            this._attrs.styleClass.trim()
+        }
+    },
+
+    _factoryNode: function() {
+        return ejs.html.DomFactory.createNode({
+            tagName: 'dl',
+            attrs: this._attrs,
+            children: this._children
+        })
+    }
+})
+
+ejs.bs3.typography.CodeInline = $.extend(true, {}, ejs.bs.core.TextTag, {
+    _getTagName: function() {
+        return "code"
+    }
+})
+
+ejs.bs3.typography.CodeBlock = $.extend(true, {}, ejs.bs.core.BodyTag, {
+    _scrollable: false,
+
+    setScrollable: function(b) {
+        this._scrollable = b
+    },
+
+    addChild: function(child) {
+        this._children.push(child)
+        this._children.push({
+            tagName: 'br'
+        })
+    },
+
+    _computeAttributes: function() {
+        if (!ejs.util.empty(this._scrollable)) {
+            this._attrs.styleClass += " pre-scrollable"
+            this._attrs.styleClass.trim()
+        }
+    },
+
+    _getTagName: function() {
+        return "pre"
+    }
+})
 
 //ejs.bs3.typography.Code = $.extend({}, ejs.bs3.core.SimpleContentTag, {
 //    _getTagName: function() {
