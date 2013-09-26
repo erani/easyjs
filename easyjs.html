@@ -140,6 +140,14 @@
                    "Header A", "Header B", "Header C"
            ])
            $('body').append(table.htmlNode())
+
+           // Form
+           $body.append(ejs.bs3.form.Form.create().htmlNode())
+
+           // Layout
+           var layout = ejs.bs3.layout.Layout.create()
+
+           $body.append(layout.htmlNode())
         })
 
     </script>

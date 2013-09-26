@@ -527,3 +527,52 @@ ejs.bs3.Table = $.extend({}, ejs.bs.core.Object, {
        return conf
    }
 })
+
+ejs.bs3.form = {}
+
+ejs.bs3.form.Form = $.extend(true, {}, ejs.bs.core.Object, {
+    _factoryNode: function() {
+        return ejs.html.DomFactory.createNode({
+            tagName: 'form',
+            attrs: this._attrs,
+            children: this._children
+        })
+    }
+})
+
+ejs.bs3.layout = {}
+
+ejs.bs3.layout.Layout = $.extend(true, {}, ejs.bs.core.Object, {
+    _elements: [],
+
+    addColumn: function(element, size) {
+        this._elements.push({
+            element: element,
+            size: size
+        })
+    },
+
+    _computeAttributes: function() {
+        this._attrs.styleClass = "row"
+    },
+
+    _factoryNode: function() {
+        var items = this.__factoryItems()
+
+        return ejs.html.DomFactory.createNode({
+            tagName: 'div',
+            attrs: this._attrs,
+            children: items
+        })
+    },
+
+    __factoryItems: function() {
+        var elements = []
+        for (var el in this._elements) {
+            elements.push({
+                tagName: 'div',
+                html: el
+            })
+        }
+    }
+})
