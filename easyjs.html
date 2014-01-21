@@ -8,6 +8,7 @@
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="easyjs.js"></script>
     <script src="easyjs-bs.js"></script>
+    <script src="easyjs-bsex.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -167,8 +168,13 @@
 
             $body.append(modal.htmlNode())
 
-            modal.setVisible(true)
+//            modal.setVisible(true)
 
+            // Window
+            var confirmDialog = ejs.bs3ex.window.Confirm.create()
+            confirmDialog.execute("Are you sure you want to purge", "Purge something", function(rs) {
+                alert(rs)
+            })
         })
 
     </script>

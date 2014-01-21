@@ -185,7 +185,7 @@ ejs.bs3.typography.Header = $.extend(true, {}, ejs.bs.core.TextTag, {
     _level: null,
 
     create: function(level, text) {
-        var obj = ejs.bs.core.TextTag.create.call(this)
+        var obj = ejs.bs.core.TextTag.create.call(this, text)
         obj._level = ejs.util.defined(level, this.LEVEL_H1)
 
         return obj
@@ -608,12 +608,12 @@ ejs.bs3.layout.Layout = $.extend(true, {}, ejs.bs.core.Object, {
 // TODO Unfinished module
 ejs.bs3.button = {
     STYLE_DEFAULT:  'btn-default',
-    STYLE_PRIMARY:  'btn-default',
-    STYLE_SUCCESS:  'btn-default',
-    STYLE_INFO:     'btn-default',
-    STYLE_WARNING:  'btn-default',
-    STYLE_DANGER:   'btn-default',
-    STYLE_LINK:     'btn-default',
+    STYLE_PRIMARY:  'btn-primary',
+    STYLE_SUCCESS:  'btn-success',
+    STYLE_INFO:     'btn-info',
+    STYLE_WARNING:  'btn-warning',
+    STYLE_DANGER:   'btn-danger',
+    STYLE_LINK:     'btn-link',
 
     TYPE_BUTTON:    'button',
     TYPE_SUBMIT:    'submit',
@@ -760,18 +760,21 @@ ejs.bs3.panel = {}
 // TODO Unfinished module
 ejs.bs3.well = {}
 
-// TODO Unfinished module
 ejs.bs3.modal = {}
+
+/**
+ * Modal element class
+ * @link http://getbootstrap.com/javascript/#modals
+ */
 ejs.bs3.modal.Modal = $.extend(true, {}, ejs.bs.core.Object, {
+
+    // TODO Add support of modal options
+    // TODO Add support of modal events
 
     _isClosable: true,
     _title: '',
     _body: '',
     _buttons: [],
-
-    setTitle: function(title) {
-        this._title = title.htmlNode()
-    },
 
     setTextTitle: function(title) {
         this._title = title
@@ -798,9 +801,13 @@ ejs.bs3.modal.Modal = $.extend(true, {}, ejs.bs.core.Object, {
     },
 
     _factoryNode: function() {
-        var header = [
-            this._title
-        ]
+        var header = [{
+            tagName: 'h4',
+            html: this._title,
+            attrs: {
+                styleClass: 'modal-title'
+            }
+        }]
 
         if (this._isClosable) {
             var closeBtn = ejs.bs3.helper.CloseButton.create()
