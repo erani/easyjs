@@ -66,6 +66,10 @@ $(document).ready(function() {
         $this.on('click', '[jq-click]', function(ev) {
             actionHandler(ev, $(this), $(this).attr('jq-click'))
         })
+        $this.on('click', 'a[jq-action], button[jq-action]', function(ev) {
+            actionHandler(ev, $(this), $(this).attr('jq-action'))
+        })
+
         $this.on('change', '[jq-change]', function(ev) {
             actionHandler(ev, $(this), $(this).attr('jq-change'))
         })
