@@ -10,176 +10,275 @@
     <script src="easyjs-bs.js"></script>
     <script src="easyjs-bsex.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            var $body = $('body')
+    <script type="text/javascript">
+    function showConfirmDialog() {
 
-            // Typography Headers
-            var element = ejs.bs3.typography.Header.create()
-            element.setText("H1 Element, default")
-            $('body').append(element.htmlNode())
+    }
 
-            element = ejs.bs3.typography.Header.create(ejs.bs.core.HEADER_LEVEL_1)
-            element.setText("H3 Element, by constructor")
-            $('body').append(element.htmlNode())
+    $(document).ready(function() {
+        $('#BaseLineBreak').append(ejs.bs3.base.LineBreak.create().htmlNode())
+        $('#BaseHLineBreak').append(ejs.bs3.base.HLineBreak.create().htmlNode())
 
-            element = ejs.bs3.typography.Header.create(ejs.bs.core.HEADER_LEVEL_3, "H3 Element, by constructor with text")
-            $('body').append(element.htmlNode())
+        var container = ejs.bs3.base.Container.create()
+        container.add("Hello world")
+        container.add(document.createElement("hr"))
+        $('#BaseContainer').append(container.htmlNode())
 
-            var element = ejs.bs3.typography.Header.create()
-            element.setLevel(ejs.bs.core.HEADER_LEVEL_5)
-            element.setText("H5 Element")
-            $('body').append(element.htmlNode())
 
-            $('body').append(ejs.bs3.base.HLineBreak.create().htmlNode())
-
-            // Paragraph
-            $body.append(ejs.bs3.typography.Paragraph.create().setText("Hello from paragraph #1").htmlNode())
-            $body.append(ejs.bs3.typography.Paragraph.create("Hello from paragraph #2").htmlNode())
-            $body.append(ejs.bs3.typography.Paragraph.create("Hello from paragraph #3").setLead(true).htmlNode())
-
-            $body.append(ejs.bs3.typography.Paragraph.create("Hello from left paragraph").setTextAlignment(ejs.bs.core.ALIGNMENT_LEFT).htmlNode())
-            $body.append(ejs.bs3.typography.Paragraph.create("Hello from center paragraph").setTextAlignment(ejs.bs.core.ALIGNMENT_CENTER).htmlNode())
-            $body.append(ejs.bs3.typography.Paragraph.create("Hello from right paragraph").setTextAlignment(ejs.bs.core.ALIGNMENT_RIGHT).htmlNode())
-
-            $body.append(ejs.bs3.typography.Paragraph.create("Hello success paragraph").setTextStyle(ejs.bs.core.STYLE_SUCCESS).htmlNode())
-            $body.append(ejs.bs3.typography.Paragraph.create("Hello danger paragraph").setTextStyle(ejs.bs.core.STYLE_DANGER).htmlNode())
-
-            // SmallText
-            $body.append(ejs.bs3.typography.SmallText.create().setText("Small text #1").htmlNode())
-            $body.append(ejs.bs3.base.LineBreak.create().htmlNode())
-
-            // StrongText
-            $body.append(ejs.bs3.typography.StrongText.create().setText("Strong text #1").htmlNode())
-            $body.append(ejs.bs3.base.LineBreak.create().htmlNode())
-
-            // ItalicText
-            $body.append(ejs.bs3.typography.ItalicText.create().setText("Italic text #1").htmlNode())
-            $body.append(ejs.bs3.base.LineBreak.create().htmlNode())
-
-            // Abbreviation
-            $body.append(ejs.bs3.typography.Abbreviation.create().setText("HTML").setTitle("Hyper Text Markup Language").htmlNode())
-            $body.append(ejs.bs3.base.LineBreak.create().htmlNode()) 
-            $body.append(ejs.bs3.typography.Abbreviation.create().setText("Initialism").setTitle("Abbreviation with initialism").setInitialism(true).htmlNode())
-            $body.append(ejs.bs3.base.LineBreak.create().htmlNode())            
-
-            // Address
-            var address = ejs.bs3.typography.Address.create()
-            address.addLine(ejs.bs3.typography.StrongText.create("Twitter, Inc.").htmlNode())
-            address.addLine("795 Folsom Ave, Suite 600")
-            address.addLine("San Francisco, CA 94107")
-            address.addLine("Phone: (+123) 456-7890")
-            $body.append(address.htmlNode())
-
-            // Blockquote
-            $body.append(ejs.bs3.typography.Blockquote.create().setText("The Blockquote text").setSource("Some source").htmlNode())
-
-            // List
-            var list = ejs.bs3.typography.UnorderedList.create()
-            list.addChild("Child A")
-            list.addChild("Child B")
-            list.addChild("Child C")
-            $body.append(list.htmlNode())
-
-            list = ejs.bs3.typography.OrderedList.create()
-            list.addChild("Child A")
-            list.addChild("Child B")
-            list.addChild("Child C")
-            $body.append(list.htmlNode())
-
-            list = ejs.bs3.typography.UnstyledList.create()
-            list.addChild("Child A")
-            list.addChild("Child B")
-            list.addChild("Child C")
-            $body.append(list.htmlNode())
-
-            list = ejs.bs3.typography.UnstyledList.create()
-            list.addChild("Child A")
-            list.addChild("Child B")
-            list.addChild("Child C")
-            list.setInline(true)
-            $body.append(list.htmlNode())
-
-            // Description
-            list = ejs.bs3.typography.Description.create()
-            list.addItem("Caption A", "Description A")
-            list.addItem("Caption B", "Description B")
-            $body.append(list.htmlNode())
-
-            list = ejs.bs3.typography.Description.create()
-            list.addItem("Caption A", "Description A")
-            list.addItem("Caption B", "Description B")
-            list.setHorizontal(true)
-            $body.append(list.htmlNode())
-
-            // Code
-            $body.append(ejs.bs3.typography.CodeInline.create().setText("Inline code").htmlNode())
-
-            var code = ejs.bs3.typography.CodeBlock.create()
-            code.addChild("<?php")
-            code.addChild("$code = 'Hello world';")
-            code.addChild("echo $code;")
-            $body.append(code.htmlNode())
-
-            var code = ejs.bs3.typography.CodeBlock.create()
-            code.addChild("<?php")
-            code.addChild("$code = 'Hello world';")
-            code.addChild("echo $code;")
-            code.setScrollable(true)
-            $body.append(code.htmlNode())
-
-           // Table
-           var table = ejs.bs3.Table.create();
-           table.addProperty(ejs.bs3.Table.STRIPED)
-           table.addProperty(ejs.bs3.Table.BORDERED)
-           table.addRow([
-               "Col A", "Col B", "Col C"
-           ])
-           table.addRow([
-               "Col A", "Col B", "Col C"
-           ], ejs.bs3.Table.DANGER)
-           table.addHeaderRow([
-                   "Header A", "Header B", "Header C"
-           ])
-           $('body').append(table.htmlNode())
-
-           // Form
-           $body.append(ejs.bs3.form.Form.create().htmlNode())
-
-           // Layout
-           var layout = ejs.bs3.layout.Layout.create()
-            $body.append(layout.htmlNode())
-
-            // Helpers
-            // Close Button
-            $body.append(ejs.bs3.helper.CloseButton.create().htmlNode())
-
-            // Modal
-            var modal = ejs.bs3.modal.Modal.create()
-            modal.setTextTitle("My modal windows");
-            modal.setBody(ejs.bs3.typography.Paragraph.create("Hello world"))
-
-            var okBtn = ejs.bs3.button.Button.create()
-            okBtn.setCaption("Ok")
-            okBtn.setHandler(function(ev, btn) {
-                modal.setVisible(false)
-            })
-            modal.addButton(okBtn)
-
-            $body.append(modal.htmlNode())
-
-//            modal.setVisible(true)
-
-            // Window
-            var confirmDialog = ejs.bs3ex.window.Confirm.create()
-            confirmDialog.execute("Are you sure you want to purge", "Purge something", function(rs) {
-                alert(rs)
+        $('#ShowPromptWindowButton').click(function() {
+            var promptDialog = ejs.bs3ex.window.Prompt.create()
+            promptDialog.execute("Are you sure you want to purge", "Purge something", function(rs) {
+                alert("Income response " + rs + " value: " + promptDialog.getInput())
             })
         })
 
+        $('#ShowConfirmWindowButton').click(function() {
+            var confirmDialog = ejs.bs3ex.window.Confirm.create()
+            confirmDialog.execute("Are you sure you want to purge", "Purge something", function(rs) {
+                alert("Income response " + rs)
+            })
+        })
+
+        $('#ShowAlertWindowButton').click(function() {
+            var alertDialog = ejs.bs3ex.window.Alert.create()
+            alertDialog.execute("You just purged something", "Purged", function(rs) {
+                alert("Alert done")
+            })
+        })
+    });
     </script>
+
+    <!--
+        <script type="text/javascript">
+//        $(document).ready(function() {
+//            var $body = $('body')
+//
+//            // Typography Headers
+//            var element = ejs.bs3.typography.Header.create()
+//            element.setText("H1 Element, default")
+//            $('body').append(element.htmlNode())
+//
+//            element = ejs.bs3.typography.Header.create(ejs.bs.core.HEADER_LEVEL_1)
+//            element.setText("H3 Element, by constructor")
+//            $('body').append(element.htmlNode())
+//
+//            element = ejs.bs3.typography.Header.create(ejs.bs.core.HEADER_LEVEL_3, "H3 Element, by constructor with text")
+//            $('body').append(element.htmlNode())
+//
+//            var element = ejs.bs3.typography.Header.create()
+//            element.setLevel(ejs.bs.core.HEADER_LEVEL_5)
+//            element.setText("H5 Element")
+//            $('body').append(element.htmlNode())
+//
+//            $('body').append(ejs.bs3.base.HLineBreak.create().htmlNode())
+//
+//            // Paragraph
+//            $body.append(ejs.bs3.typography.Paragraph.create().setText("Hello from paragraph #1").htmlNode())
+//            $body.append(ejs.bs3.typography.Paragraph.create("Hello from paragraph #2").htmlNode())
+//            $body.append(ejs.bs3.typography.Paragraph.create("Hello from paragraph #3").setLead(true).htmlNode())
+//
+//            $body.append(ejs.bs3.typography.Paragraph.create("Hello from left paragraph").setTextAlignment(ejs.bs.core.ALIGNMENT_LEFT).htmlNode())
+//            $body.append(ejs.bs3.typography.Paragraph.create("Hello from center paragraph").setTextAlignment(ejs.bs.core.ALIGNMENT_CENTER).htmlNode())
+//            $body.append(ejs.bs3.typography.Paragraph.create("Hello from right paragraph").setTextAlignment(ejs.bs.core.ALIGNMENT_RIGHT).htmlNode())
+//
+//            $body.append(ejs.bs3.typography.Paragraph.create("Hello success paragraph").setTextStyle(ejs.bs.core.STYLE_SUCCESS).htmlNode())
+//            $body.append(ejs.bs3.typography.Paragraph.create("Hello danger paragraph").setTextStyle(ejs.bs.core.STYLE_DANGER).htmlNode())
+//
+//            // SmallText
+//            $body.append(ejs.bs3.typography.SmallText.create().setText("Small text #1").htmlNode())
+//            $body.append(ejs.bs3.base.LineBreak.create().htmlNode())
+//
+//            // StrongText
+//            $body.append(ejs.bs3.typography.StrongText.create().setText("Strong text #1").htmlNode())
+//            $body.append(ejs.bs3.base.LineBreak.create().htmlNode())
+//
+//            // ItalicText
+//            $body.append(ejs.bs3.typography.ItalicText.create().setText("Italic text #1").htmlNode())
+//            $body.append(ejs.bs3.base.LineBreak.create().htmlNode())
+//
+//            // Abbreviation
+//            $body.append(ejs.bs3.typography.Abbreviation.create().setText("HTML").setTitle("Hyper Text Markup Language").htmlNode())
+//            $body.append(ejs.bs3.base.LineBreak.create().htmlNode())
+//            $body.append(ejs.bs3.typography.Abbreviation.create().setText("Initialism").setTitle("Abbreviation with initialism").setInitialism(true).htmlNode())
+//            $body.append(ejs.bs3.base.LineBreak.create().htmlNode())
+//
+//            // Address
+//            var address = ejs.bs3.typography.Address.create()
+//            address.addLine(ejs.bs3.typography.StrongText.create("Twitter, Inc.").htmlNode())
+//            address.addLine("795 Folsom Ave, Suite 600")
+//            address.addLine("San Francisco, CA 94107")
+//            address.addLine("Phone: (+123) 456-7890")
+//            $body.append(address.htmlNode())
+//
+//            // Blockquote
+//            $body.append(ejs.bs3.typography.Blockquote.create().setText("The Blockquote text").setSource("Some source").htmlNode())
+//
+//            // List
+//            var list = ejs.bs3.typography.UnorderedList.create()
+//            list.addChild("Child A")
+//            list.addChild("Child B")
+//            list.addChild("Child C")
+//            $body.append(list.htmlNode())
+//
+//            list = ejs.bs3.typography.OrderedList.create()
+//            list.addChild("Child A")
+//            list.addChild("Child B")
+//            list.addChild("Child C")
+//            $body.append(list.htmlNode())
+//
+//            list = ejs.bs3.typography.UnstyledList.create()
+//            list.addChild("Child A")
+//            list.addChild("Child B")
+//            list.addChild("Child C")
+//            $body.append(list.htmlNode())
+//
+//            list = ejs.bs3.typography.UnstyledList.create()
+//            list.addChild("Child A")
+//            list.addChild("Child B")
+//            list.addChild("Child C")
+//            list.setInline(true)
+//            $body.append(list.htmlNode())
+//
+//            // Description
+//            list = ejs.bs3.typography.Description.create()
+//            list.addItem("Caption A", "Description A")
+//            list.addItem("Caption B", "Description B")
+//            $body.append(list.htmlNode())
+//
+//            list = ejs.bs3.typography.Description.create()
+//            list.addItem("Caption A", "Description A")
+//            list.addItem("Caption B", "Description B")
+//            list.setHorizontal(true)
+//            $body.append(list.htmlNode())
+//
+//            // Code
+//            $body.append(ejs.bs3.typography.CodeInline.create().setText("Inline code").htmlNode())
+//
+//            var code = ejs.bs3.typography.CodeBlock.create()
+//            code.addChild("<?php")
+//            code.addChild("$code = 'Hello world';")
+//            code.addChild("echo $code;")
+//            $body.append(code.htmlNode())
+//
+//            var code = ejs.bs3.typography.CodeBlock.create()
+//            code.addChild("<?php")
+//            code.addChild("$code = 'Hello world';")
+//            code.addChild("echo $code;")
+//            code.setScrollable(true)
+//            $body.append(code.htmlNode())
+//
+//           // Table
+//           var table = ejs.bs3.Table.create();
+//           table.addProperty(ejs.bs3.Table.STRIPED)
+//           table.addProperty(ejs.bs3.Table.BORDERED)
+//           table.addRow([
+//               "Col A", "Col B", "Col C"
+//           ])
+//           table.addRow([
+//               "Col A", "Col B", "Col C"
+//           ], ejs.bs3.Table.DANGER)
+//           table.addHeaderRow([
+//                   "Header A", "Header B", "Header C"
+//           ])
+//           $('body').append(table.htmlNode())
+//
+//           // Form
+//           $body.append(ejs.bs3.form.Form.create().htmlNode())
+//
+//           // Layout
+//           var layout = ejs.bs3.layout.Layout.create()
+//            $body.append(layout.htmlNode())
+//
+//            // Helpers
+//            // Close Button
+//            $body.append(ejs.bs3.helper.CloseButton.create().htmlNode())
+//
+//            // Modal
+//            var modal = ejs.bs3.modal.Modal.create()
+//            modal.setTextTitle("My modal windows");
+//            modal.setBody(ejs.bs3.typography.Paragraph.create("Hello world"))
+//
+//            var okBtn = ejs.bs3.button.Button.create()
+//            okBtn.setCaption("Ok")
+//            okBtn.setHandler(function(ev, btn) {
+//                modal.setVisible(false)
+//            })
+//            modal.addButton(okBtn)
+//
+//            $body.append(modal.htmlNode())
+//
+////            modal.setVisible(true)
+//
+//            // Window
+//
+//            var confirmDialog = ejs.bs3ex.window.Confirm.create()
+//            confirmDialog.execute("Are you sure you want to purge", "Purge something", function(rs) {
+//                alert(rs)
+//            })
+//        })
+
+    </script>
+    -->
 </head>
 <body>
+<div class="container">
+    <h1>EasyJs Bootstrap</h1>
+    <h2>Base</h2>
+    <h3>Line break</h3>
+    <p id="BaseLineBreak">
+        <pre>$('body').append(ejs.bs3.base.LineBreak.create().htmlNode())</pre>
+    </p>
+
+    <h3>Thematic Line break</h3>
+    <p id="BaseHLineBreak">
+    <pre>$('body').append(ejs.bs3.base.HLineBreak.create().htmlNode())</pre>
+    </p>
+
+    <h3>Container</h3>
+    <p id="BaseContainer">
+    <pre>
+    var container = ejs.bs3.base.Container.create()
+    container.add("Hello world")
+    container.add(document.createElement("hr"))
+    $('body').append(container.htmlNode())
+    </pre>
+    </p>
+
+    <h1>EasyJs BootstrapEx</h1>
+    <h2>Windows</h2>
+    <h3>Prompt window</h3>
+    <p>
+        <a href="javascript:void(0)" id="ShowPromptWindowButton">Show prompt window</a>
+        <pre>
+        var promptDialog = ejs.bs3ex.window.Prompt.create()
+        promptDialog.execute("Are you sure you want to purge", "Purge something", function(rs) {
+            alert("Income response " + rs + " value: " + promptDialog.getInput())
+        })
+        </pre>
+    </p>
+
+    <h3>Confirm window</h3>
+    <p>
+        <a href="javascript:void(0)" id="ShowConfirmWindowButton">Show confirm window</a>
+        <pre>
+        var confirmDialog = ejs.bs3ex.window.Confirm.create()
+        confirmDialog.execute("Are you sure you want to purge", "Purge something", function(rs) {
+            alert("Income response " + rs)
+        })
+        </pre>
+    </p>
+
+    <h3>Alert window</h3>
+    <p>
+        <a href="javascript:void(0)" id="ShowAlertWindowButton">Show alert window</a>
+        <pre>
+        var alertDialog = ejs.bs3ex.window.Alert.create()
+        alertDialog.execute("You just purged something", "Purged", function(rs) {
+            alert("Alert done")
+        })
+        </pre>
+    </p>
+</div>
 
 </body>
 </html>

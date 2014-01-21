@@ -174,6 +174,25 @@ ejs.bs3.base.HLineBreak = $.extend(true, {}, ejs.bs.core.SimpleTag, {
     }
 })
 
+ejs.bs3.base.Container = $.extend(true, {}, ejs.bs.core.Object, {
+    _children: [],
+
+    add: function(child) {
+        if (null == this._domNode) {
+            this._children.push(child)
+        } else {
+            this._domNode.append(child)
+        }
+    },
+
+    _factoryNode: function() {
+        return ejs.html.DomFactory.createNode({
+            tagName: 'div',
+            children: this._children
+        })
+    }
+})
+
 /** ===== Typography Package ===== **/
 
 // TODO Add alignment states (text-left, text-center, text-right)
@@ -776,7 +795,7 @@ ejs.bs3.modal.Modal = $.extend(true, {}, ejs.bs.core.Object, {
     _body: '',
     _buttons: [],
 
-    setTextTitle: function(title) {
+    setTitle: function(title) {
         this._title = title
     },
 
@@ -801,19 +820,21 @@ ejs.bs3.modal.Modal = $.extend(true, {}, ejs.bs.core.Object, {
     },
 
     _factoryNode: function() {
-        var header = [{
-            tagName: 'h4',
-            html: this._title,
-            attrs: {
-                styleClass: 'modal-title'
-            }
-        }]
+        var header = []
 
         if (this._isClosable) {
             var closeBtn = ejs.bs3.helper.CloseButton.create()
             closeBtn.addData('dismiss', 'modal')
             header.push(closeBtn.htmlNode())
         }
+
+        header.push({
+            tagName: 'h4',
+            html: this._title,
+            attrs: {
+                styleClass: 'modal-title'
+            }
+        })
 
         return ejs.html.DomFactory.createNode({
             tagName: 'div',
