@@ -140,12 +140,22 @@ ejs.bs3 = {}
 
 ejs.bs3.base = {}
 
+/**
+ * Create a line break
+ * @link http://www.w3schools.com/tags/tag_br.asp
+ * Usage: $('body').append(ejs.bs3.base.LineBreak.create().htmlNode())
+ */
 ejs.bs3.base.LineBreak = $.extend(true, {}, ejs.bs.core.SimpleTag, {
     _getTagName: function() {
         return "br"
     }
 })
 
+/**
+ * Create a thematic line break
+ * @link http://www.w3schools.com/tags/tag_hr.asp
+ * Usage: $('body').append(ejs.bs3.base.HLineBreak.create().htmlNode())
+ */
 ejs.bs3.base.HLineBreak = $.extend(true, {}, ejs.bs.core.SimpleTag, {
     _getTagName: function() {
         return "hr"
@@ -154,6 +164,9 @@ ejs.bs3.base.HLineBreak = $.extend(true, {}, ejs.bs.core.SimpleTag, {
 
 /** ===== Typography Package ===== **/
 
+// TODO Add alignment states (text-left, text-center, text-right)
+// TODO Add emphasis classes (text-muted, text-primary, text-success, text-info, text-warning, text-danger)
+// TODO Add Page Header
 ejs.bs3.typography = {}
 
 ejs.bs3.typography.Header = $.extend(true, {}, ejs.bs.core.TextTag, {
@@ -318,6 +331,7 @@ ejs.bs3.typography.Blockquote = $.extend(true, {}, ejs.bs.core.Object, {
     }
 })
 
+// TODO Add List Group
 ejs.bs3.typography.AbstractList = $.extend(true, {}, ejs.bs.core.BodyTag, {
     _inline: false,
 
@@ -528,6 +542,7 @@ ejs.bs3.Table = $.extend({}, ejs.bs.core.Object, {
    }
 })
 
+// TODO Unfinished module
 ejs.bs3.form = {}
 
 ejs.bs3.form.Form = $.extend(true, {}, ejs.bs.core.Object, {
@@ -540,6 +555,7 @@ ejs.bs3.form.Form = $.extend(true, {}, ejs.bs.core.Object, {
     }
 })
 
+// TODO Unfinished module
 ejs.bs3.layout = {}
 
 ejs.bs3.layout.Layout = $.extend(true, {}, ejs.bs.core.Object, {
@@ -576,3 +592,69 @@ ejs.bs3.layout.Layout = $.extend(true, {}, ejs.bs.core.Object, {
         }
     }
 })
+
+// TODO Unfinished module
+ejs.bs3.button = {}
+ejs.bs3.button.Button = {}
+ejs.bs3.button.ButtonGroup = {}
+ejs.bs3.button.ButtonDropdown = {}
+
+// TODO Unfinished module
+ejs.bs3.image = {}
+
+// TODO Unfinished module
+ejs.bs3.helper = {}
+
+// TODO Unfinished module
+ejs.bs3.icon = {}
+
+// TODO Unfinished module
+ejs.bs3.drowpdown = {}
+
+// TODO Unfinished module
+ejs.bs3.helper = {}
+
+// TODO Unfinished module
+ejs.bs3.nav = {}
+
+// TODO Unfinished module
+ejs.bs3.navbar = {}
+
+// TODO Unfinished module
+ejs.bs3.breadcrumb = {}
+
+// TODO Unfinished module
+ejs.bs3.pagination = {}
+
+// TODO Unfinished module
+ejs.bs3.label = {}
+
+// TODO Unfinished module
+ejs.bs3.badge = {}
+
+// TODO Unfinished module
+ejs.bs3.jumbotron = {}
+
+// TODO Unfinished module
+ejs.bs3.helper = {}
+
+// TODO Unfinished module
+ejs.bs3.thumbnail = {}
+
+// TODO Unfinished module
+ejs.bs3.alert = {}
+
+// TODO Unfinished module
+ejs.bs3.progressbar = {}
+
+// TODO Unfinished module
+ejs.bs3.media = {}
+
+// TODO Unfinished module
+ejs.bs3.panel = {}
+
+// TODO Unfinished module
+ejs.bs3.well = {}
+
+// TODO Unfinished module
+ejs.bs3.modal = {}
