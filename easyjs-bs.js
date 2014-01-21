@@ -20,6 +20,10 @@ ejs.bs = {
         STYLE_WARNING: 'warning',
         STYLE_DANGER: 'danger',
 
+        SIZE_LARGE: 'lg',
+        SIZE_SMALL: 'sm',
+        SIZE_EXTRA_SMALL: 'xs',
+
         DynamicNamedTag: {
             _getTagName: function() {
                 throw "The method should be overridden"
@@ -38,8 +42,16 @@ ejs.bs.core.Object = $.extend(true, {}, ejs.Object, {
         style: ""
     },
 
-    html: function() {
+    addData: function(name, value) {
+        if (this._domNode == null) {
+            this._attrs['data-' + name] = value
+        } else {
+            $(this._domNode).attr('data-' + name, value)
+        }
+    },
 
+    html: function() {
+        // TODO Implement
     },
 
     htmlNode: function() {
@@ -594,8 +606,84 @@ ejs.bs3.layout.Layout = $.extend(true, {}, ejs.bs.core.Object, {
 })
 
 // TODO Unfinished module
-ejs.bs3.button = {}
-ejs.bs3.button.Button = {}
+ejs.bs3.button = {
+    STYLE_DEFAULT:  'btn-default',
+    STYLE_PRIMARY:  'btn-default',
+    STYLE_SUCCESS:  'btn-default',
+    STYLE_INFO:     'btn-default',
+    STYLE_WARNING:  'btn-default',
+    STYLE_DANGER:   'btn-default',
+    STYLE_LINK:     'btn-default',
+
+    TYPE_BUTTON:    'button',
+    TYPE_SUBMIT:    'submit',
+    TYPE_RESET:     'reset'
+}
+
+/**
+ * Button class
+ * @link http://getbootstrap.com/css/#buttons
+ */
+ejs.bs3.button.Button = $.extend(true, {}, ejs.bs.core.Object, {
+    // TODO Add custom constructor
+    // TODO Add Block Level
+    // TODO Add active state
+    // TODO Add disabled state
+
+    _caption: '',
+    _style: ejs.bs3.button.STYLE_DEFAULT,
+    _type: ejs.bs3.button.TYPE_BUTTON,
+    _size: null,
+    _handler: null,
+
+    setCaption: function(caption) {
+        this._caption = caption
+    },
+
+    setStyle: function(style) {
+        this._style = style
+    },
+
+    setType: function(type) {
+        this._type = type
+    },
+
+    setSize: function(size) {
+        this._size = size
+    },
+
+    setHandler: function(handler) {
+        this._handler = handler
+    },
+
+    _factoryNode: function() {
+        var btn = ejs.html.DomFactory.createNode({
+            tagName: 'button',
+            html: this._caption,
+            attrs: this._attrs
+        })
+
+        if (this._handler != null) {
+            var self = this
+            $(btn).on('click', function(ev) {
+                self._handler(ev, self)
+            })
+        }
+
+        return btn;
+    },
+
+    _computeAttributes: function() {
+        this._attrs.styleClass = 'btn ' + this._style
+        if (null != this._size) {
+            this._attrs.styleClass += ' btn-' + this._size
+        }
+
+        this._attrs.type = 'button'
+    }
+
+})
+
 ejs.bs3.button.ButtonGroup = {}
 ejs.bs3.button.ButtonDropdown = {}
 
@@ -637,6 +725,22 @@ ejs.bs3.jumbotron = {}
 
 // TODO Unfinished module
 ejs.bs3.helper = {}
+ejs.bs3.helper.CloseButton = $.extend(true, {}, ejs.bs.core.Object, {
+
+    _factoryNode: function() {
+        return ejs.html.DomFactory.createNode({
+            tagName: 'button',
+            html: '&times;',
+            attrs: this._attrs
+        })
+    },
+
+    _computeAttributes: function() {
+        this._attrs.styleClass = 'close'
+        this._attrs.type = 'button'
+        this._attrs['aria-hidden'] = true
+    }
+})
 
 // TODO Unfinished module
 ejs.bs3.thumbnail = {}
@@ -658,3 +762,88 @@ ejs.bs3.well = {}
 
 // TODO Unfinished module
 ejs.bs3.modal = {}
+ejs.bs3.modal.Modal = $.extend(true, {}, ejs.bs.core.Object, {
+
+    _isClosable: true,
+    _title: '',
+    _body: '',
+    _buttons: [],
+
+    setTitle: function(title) {
+        this._title = title.htmlNode()
+    },
+
+    setTextTitle: function(title) {
+        this._title = title
+    },
+
+    setIsClosable: function(b) {
+        this._isClosable = b
+    },
+
+    setBody: function(body) {
+        this._body = body.htmlNode()
+    },
+
+    addButton: function(button) {
+        this._buttons.push(button.htmlNode())
+    },
+
+    setVisible: function(b) {
+        if (b) {
+            $(this.htmlNode()).modal()
+        } else {
+            $(this.htmlNode()).modal('hide')
+        }
+    },
+
+    _factoryNode: function() {
+        var header = [
+            this._title
+        ]
+
+        if (this._isClosable) {
+            var closeBtn = ejs.bs3.helper.CloseButton.create()
+            closeBtn.addData('dismiss', 'modal')
+            header.push(closeBtn.htmlNode())
+        }
+
+        return ejs.html.DomFactory.createNode({
+            tagName: 'div',
+            attrs: {
+                styleClass: 'modal fade'
+            },
+            children: [{
+                tagName: 'div',
+                attrs: {
+                    styleClass: 'modal-dialog'
+                },
+                children: [{
+                    tagName: 'div',
+                    attrs: {
+                        styleClass: 'modal-content'
+                    },
+                    children: [{
+                        tagName: 'div',
+                        attrs: {
+                            styleClass: 'modal-header'
+                        },
+                        children: header
+                    },{
+                        tagName: 'div',
+                        attrs: {
+                            styleClass: 'modal-body'
+                        },
+                        children: [this._body]
+                    },{
+                        tagName: 'div',
+                        attrs: {
+                            styleClass: 'modal-footer'
+                        },
+                        children: this._buttons
+                    }]
+                }]
+            }]
+        })
+    }
+})

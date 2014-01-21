@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
 
     <script src="jquery-1.10.2.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="easyjs.js"></script>
     <script src="easyjs-bs.js"></script>
 
@@ -146,8 +147,28 @@
 
            // Layout
            var layout = ejs.bs3.layout.Layout.create()
+            $body.append(layout.htmlNode())
 
-           $body.append(layout.htmlNode())
+            // Helpers
+            // Close Button
+            $body.append(ejs.bs3.helper.CloseButton.create().htmlNode())
+
+            // Modal
+            var modal = ejs.bs3.modal.Modal.create()
+            modal.setTextTitle("My modal windows");
+            modal.setBody(ejs.bs3.typography.Paragraph.create("Hello world"))
+
+            var okBtn = ejs.bs3.button.Button.create()
+            okBtn.setCaption("Ok")
+            okBtn.setHandler(function(ev, btn) {
+                modal.setVisible(false)
+            })
+            modal.addButton(okBtn)
+
+            $body.append(modal.htmlNode())
+
+            modal.setVisible(true)
+
         })
 
     </script>
