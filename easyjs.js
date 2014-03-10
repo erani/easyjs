@@ -16,6 +16,10 @@ var ejs = {
 }
 
 ejs.util = {
+    isset: function(object, def) {
+        return (typeof object == 'undefined') ? ((typeof def == 'undefined') ? false : def) : object
+    },
+
     defined: function(value, def) {
         return (typeof value != 'undefined') ? value : ((typeof def != 'undefined') ? def : null)
     },

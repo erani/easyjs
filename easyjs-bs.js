@@ -790,39 +790,28 @@ ejs.bs3.modal.Modal = $.extend(true, {}, ejs.bs.core.Object, {
     // TODO Add support of modal options
     // TODO Add support of modal events
 
-    _isClosable: true,
-    _title: '',
-    _body: '',
-    _buttons: [],
-
-    setTitle: function(title) {
-        this._title = title
+    _options: {
+        title: '',
+        body: null,
+        buttons: [],
+        isClosable: true
     },
 
-    setIsClosable: function(b) {
-        this._isClosable = b
-    },
+    create: function(options) {
+        ejs.bs.core.Object.create.call(this)
+        this._options = options
 
-    setBody: function(body) {
-        this._body = body.htmlNode()
-    },
-
-    addButton: function(button) {
-        this._buttons.push(button.htmlNode())
+        return this
     },
 
     setVisible: function(b) {
-        if (b) {
-            $(this.htmlNode()).modal()
-        } else {
-            $(this.htmlNode()).modal('hide')
-        }
+        (b) ? $(this.htmlNode()).modal() : $(this.htmlNode()).modal('hide')
     },
 
     _factoryNode: function() {
         var header = []
 
-        if (this._isClosable) {
+        if (this._options.isClosable) {
             var closeBtn = ejs.bs3.helper.CloseButton.create()
             closeBtn.addData('dismiss', 'modal')
             header.push(closeBtn.htmlNode())
@@ -830,7 +819,7 @@ ejs.bs3.modal.Modal = $.extend(true, {}, ejs.bs.core.Object, {
 
         header.push({
             tagName: 'h4',
-            html: this._title,
+            html: this._options.title,
             attrs: {
                 styleClass: 'modal-title'
             }
@@ -862,13 +851,13 @@ ejs.bs3.modal.Modal = $.extend(true, {}, ejs.bs.core.Object, {
                         attrs: {
                             styleClass: 'modal-body'
                         },
-                        children: [this._body]
+                        children: [this._options.body]
                     },{
                         tagName: 'div',
                         attrs: {
                             styleClass: 'modal-footer'
                         },
-                        children: this._buttons
+                        children: this._options.buttons
                     }]
                 }]
             }]
